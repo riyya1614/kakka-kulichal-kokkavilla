@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല — Kakka Kulichal Kokkavilla</title>
+  <meta name="description" content="Even if a crow bathes, it will not become a crane. An authentic, cinematic Kerala interactive satire.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/images/unbathed-crow.png" type="image/png">
+</head>
+<body>
+
+  <!-- Cinematic Background & Kerala Atmosphere -->
+  <div class="cinematic-bg" style="background-image: url('assets/images/kerala_bg.jpg');"></div>
+  <div class="cinematic-overlay"></div>
+  <div class="sunbeam-effect"></div>
+
+  <div class="app-container">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="brand-badge">
+        <div class="brand-icon-wrap">
+          <img src="assets/images/unbathed-crow.png" alt="കാക്ക (Crow)">
+        </div>
+        <div class="brand-text">
+          <span class="brand-malayalam">കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല</span>
+          <span class="brand-tagline">A Kerala Satirical Experience</span>
+        </div>
+      </div>
+
+      <button id="audio-toggle-btn" class="audio-btn" aria-label="Toggle Sound" title="Toggle Sound">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Hero Wrapper -->
+    <main class="hero-wrapper">
+      <!-- Left: Story & Title -->
+      <section class="hero-text-side">
+        <div class="hero-pre-pill">
+          <span>🌴</span> Kerala Cultural Folklore &bull; College Project
+        </div>
+
+        <h1 class="hero-title-ml">
+          കാക്ക കുളിച്ചാൽ<br>
+          <span>കൊക്കാവില്ല</span>
+        </h1>
+
+        <p class="hero-subtitle-en">
+          "Even if a crow bathes, it will not become a crane."
+        </p>
+
+        <p class="hero-quote-support">
+          Can bucket water, Ayurvedic soap, and high-pressure shampoo turn a black Kerala crow into a pristine white crane? Let's test the ancient Malayalam wisdom!
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="game.html" class="btn-primary" id="start-experience-btn">
+            <span>START BATH</span>
+            <span class="btn-arrow">🚿</span>
+          </a>
+
+          <span class="hero-disclaimer-tag">
+            🎯 Mission: Wash the crow through 8 intense stages!
+          </span>
+        </div>
+      </section>
+
+      <!-- Right: Perched Realistic Crow Card -->
+      <section class="hero-crow-side">
+        <div class="crow-pedestal-card" title="Click START BATH to begin!">
+          <div class="dirty-tag-banner">⚠️ UNBATHED &bull; കുളിക്കാത്ത കാക്ക 🪰</div>
+          <img src="assets/images/unbathed-crow.png" alt="Starting Unbathed Crow" class="crow-pedestal-img">
+          
+          <div class="crow-card-badge">
+            <div class="crow-card-info">
+              <h4>Corvus splendens (കാക്ക)</h4>
+              <p>Status: Ready for heavy bath &amp; scrubbing</p>
+            </div>
+            <div class="crane-potential-badge">
+              Crane: 0%
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

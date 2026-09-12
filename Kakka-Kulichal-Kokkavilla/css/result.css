@@ -1,0 +1,350 @@
+/* ==========================================================================
+   KAKKA KULICHAL KOKKAVILLA — RESULT STYLES (result.css)
+   Cinematic Reveal, Satirical Punchline, Statistics & Replay Controls
+   ========================================================================== */
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Scene */
+.result-bg {
+  position: fixed;
+  inset: 0;
+  background-image: url('../assets/images/kerala_bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.result-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(15, 44, 28, 0.4) 0%, rgba(9, 26, 17, 0.88) 80%, rgba(4, 12, 8, 0.96) 100%);
+  pointer-events: none;
+}
+
+/* Result Main Grid */
+.result-content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 3.5rem;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 1.5rem 3.5rem 3.5rem 3.5rem;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+/* Left: Crow Showcase with Crane Comparison */
+.result-showcase-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.result-crow-frame {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 32px;
+  overflow: hidden;
+  border: 2px solid var(--gold-warm);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), var(--shadow-gold);
+  background: var(--forest-darkest);
+}
+
+.result-crow-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: gentleBreathe 6s infinite ease-in-out;
+}
+
+@keyframes gentleBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.result-sparkle {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #fff 0%, var(--gold-light) 50%, transparent 100%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: sparkleTwinkle 1.5s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* Crane Comparison Inset */
+.crane-comparison-card {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 130px;
+  height: 130px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid var(--cream-border);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  background: var(--forest-dark);
+  transition: transform var(--transition-smooth);
+}
+
+.crane-comparison-card:hover {
+  transform: scale(1.08);
+  border-color: var(--gold-warm);
+}
+
+.crane-comparison-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.crane-comparison-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(9, 26, 17, 0.85);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  text-align: center;
+  padding: 0.2rem;
+  text-transform: uppercase;
+}
+
+/* Status Pill below Frame */
+.result-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--glass-dark);
+  border: 1px solid var(--glass-border);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 0.85rem;
+  color: var(--text-cream);
+}
+
+.status-dot-clean {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--forest-accent);
+  box-shadow: 0 0 10px var(--forest-accent);
+}
+
+/* Right: Punchline & Statistics */
+.result-info-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-verdict-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--gold-warm);
+  color: var(--gold-light);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.4rem 1.15rem;
+  border-radius: 999px;
+  width: fit-content;
+  margin-bottom: 1.25rem;
+}
+
+.result-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.result-proverb-ml {
+  font-family: var(--font-malayalam);
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.25;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.result-explanation {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #dce5df;
+  margin-bottom: 2rem;
+  max-width: 580px;
+  border-left: 3px solid var(--forest-accent);
+  padding-left: 1.25rem;
+}
+
+.result-explanation em {
+  color: #fff;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Statistics Card */
+.stats-card {
+  background: var(--glass-darker);
+  border: 1.5px solid var(--cream-border);
+  border-radius: 24px;
+  padding: 1.75rem 2rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2.25rem;
+  max-width: 580px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.stat-val {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-sans);
+}
+
+.stat-val.gold {
+  color: var(--gold-light);
+}
+
+.stat-val.red {
+  color: #ff8888;
+}
+
+.stats-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.25rem;
+}
+
+.species-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.species-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.species-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.crane-result-pill {
+  background: rgba(220, 50, 50, 0.2);
+  border: 1px solid rgba(255, 100, 100, 0.4);
+  color: #ff9999;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+}
+
+/* Actions Row */
+.result-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Responsive Rules for Result Screen */
+@media (max-width: 1024px) {
+  .result-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 1.5rem 2rem 3rem 2rem;
+    text-align: center;
+  }
+  
+  .result-info-side {
+    align-items: center;
+  }
+  
+  .result-explanation {
+    border-left: none;
+    border-top: 2px solid var(--forest-accent);
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+  
+  .stats-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .stats-footer {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .result-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .result-actions .btn-primary,
+  .result-actions .btn-secondary {
+    width: 100%;
+  }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കുളി സമയം! — കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല</title>
+  <meta name="description" content="Interactive crow bathing game based on the Malayalam proverb കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="icon" href="assets/images/bath-crow.png" type="image/png">
+</head>
+
+<body>
+
+  <div class="game-container">
+
+    <div class="game-bg" style="background-image: url('assets/images/bath_bg.jpg');"></div>
+    <div class="game-bg-overlay"></div>
+
+    <!-- TOP HUD -->
+    <header class="game-hud">
+
+      <div class="hud-left">
+        <a href="index.html" class="btn-secondary" id="btn-back-home" title="Return to Home">
+          ← HOME
+        </a>
+      </div>
+
+      <div class="hud-center">
+        <div class="meter-meta">
+          <div class="clean-label">
+            <span>CLEANLINESS:</span>
+            <span id="clean-pct-val" class="clean-pct">0%</span>
+          </div>
+
+          <span id="stage-num" class="stage-badge">STAGE 1</span>
+        </div>
+
+        <div class="progress-track" aria-label="Bathing Progress">
+          <div id="clean-progress-bar" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="hud-badge timer-badge" title="Elapsed Time">
+          <span>⏱️</span>
+          <span id="timer-val" class="timer-val">00:00</span>
+        </div>
+
+        <div class="hud-badge crane-lock-badge" title="Crane Transformation Probability">
+          <span>🕊️</span>
+          <span>CRANE: 0.0%</span>
+        </div>
+
+        <button id="audio-toggle-btn" class="audio-btn" type="button" aria-label="Toggle Sound" title="Toggle Sound">
+          🔊
+        </button>
+      </div>
+
+    </header>
+
+    <!-- INSTRUCTION BANNER -->
+    <div class="instruction-banner" id="instruction-banner">
+      <span class="instruction-icon" id="instruction-icon">💧</span>
+      <span id="instruction-text" class="instruction-text">
+        Click the Water tool or click the crow to pour fresh well water.
+      </span>
+      <span id="instruction-note" class="instruction-hand-note">
+        — Stage 1: Wash away initial dirt!
+      </span>
+    </div>
+
+    <!-- MAIN BATHING ARENA -->
+    <main class="arena-wrap">
+
+      <div id="crow-stage" class="crow-stage stage-1" title="Click to apply the selected tool!">
+
+        <div class="crow-layer-container" id="crow-layer-container">
+
+          <!-- 1. Base Bath Crow Image (Used for stages 1 to 8) -->
+          <img id="main-crow-img" src="assets/images/bath-crow.png" alt="Bathing Crow" class="crow-img-layer crow-bath-img">
+
+          <!-- 2. Final Pristine Bathed Crow (Used for final 100% state) -->
+          <img id="final-crow-img" src="assets/images/bathed-crow.png" alt="Clean Bathed Crow" class="crow-img-layer crow-final-img">
+
+          <!-- ============================================
+               DISTINCT VISUAL STAGE OVERLAYS (STAGES 1 - 8)
+               ============================================ -->
+
+          <!-- Stage 1: Dry Crow & Dirty Overlay -->
+          <div id="fx-stage-1" class="stage-overlay stage-1-fx visible">
+            <div class="dirt-spot d1"></div>
+            <div class="dirt-spot d2"></div>
+            <div class="dirt-spot d3"></div>
+            <div class="dirt-spot d4"></div>
+            <div class="dirt-spot d5"></div>
+            <div class="dry-dust-haze"></div>
+            <div class="fly-pest fly-1">🪰</div>
+            <div class="fly-pest fly-2">🪰</div>
+          </div>
+
+          <!-- Stage 2: Wet Crow (Droplets, Splashes & Sheen) -->
+          <div id="fx-stage-2" class="stage-overlay stage-2-fx">
+            <div class="wet-glaze"></div>
+            <div class="water-drip drip-1"></div>
+            <div class="water-drip drip-2"></div>
+            <div class="water-drip drip-3"></div>
+            <div class="water-drip drip-4"></div>
+            <div class="water-splash-ring r1"></div>
+            <div class="water-splash-ring r2"></div>
+          </div>
+
+          <!-- Stage 3: Soap Bubbles & White Foam Overlay -->
+          <div id="fx-stage-3" class="stage-overlay stage-3-fx">
+            <div class="soap-bubble-cluster c1"></div>
+            <div class="soap-bubble-cluster c2"></div>
+            <div class="soap-bubble-cluster c3"></div>
+            <div class="white-foam-mound fm1"></div>
+            <div class="white-foam-mound fm2"></div>
+            <div class="float-bubble fb1"></div>
+            <div class="float-bubble fb2"></div>
+            <div class="float-bubble fb3"></div>
+          </div>
+
+          <!-- Stage 4: Body Wash (Different Rich Lather & Larger Iridescent Bubbles) -->
+          <div id="fx-stage-4" class="stage-overlay stage-4-fx">
+            <div class="bodywash-lather bl1"></div>
+            <div class="bodywash-lather bl2"></div>
+            <div class="bodywash-lather bl3"></div>
+            <div class="big-iridescent-bubble bb1"></div>
+            <div class="big-iridescent-bubble bb2"></div>
+            <div class="big-iridescent-bubble bb3"></div>
+            <div class="herbal-gel-glow"></div>
+          </div>
+
+          <!-- Stage 5: Shampoo (Foam concentrated strictly around head & neck) -->
+          <div id="fx-stage-5" class="stage-overlay stage-5-fx">
+            <div class="shampoo-head-crown"></div>
+            <div class="shampoo-froth sf1"></div>
+            <div class="shampoo-froth sf2"></div>
+            <div class="shampoo-bubble-spray sbs1"></div>
+            <div class="shampoo-bubble-spray sbs2"></div>
+          </div>
+
+          <!-- Stage 6: Scrub (Circular scrubbing swirls & dense micro-suds) -->
+          <div id="fx-stage-6" class="stage-overlay stage-6-fx">
+            <div class="scrub-whirlpool sw1"></div>
+            <div class="scrub-whirlpool sw2"></div>
+            <div class="scrub-motion-ring"></div>
+            <div class="micro-bubble-fizz"></div>
+            <div class="scrub-clean-patch"></div>
+          </div>
+
+          <!-- Stage 7: Groom (Feather grooming lines, sleek luster & comb sheen) -->
+          <div id="fx-stage-7" class="stage-overlay stage-7-fx">
+            <div class="groom-sheen-sweep"></div>
+            <div class="feather-align-line fl1"></div>
+            <div class="feather-align-line fl2"></div>
+            <div class="feather-align-line fl3"></div>
+            <div class="preen-shine-gleam"></div>
+          </div>
+
+          <!-- Stage 8: Rinse (Powerful water cascade clearing away all foam) -->
+          <div id="fx-stage-8" class="stage-overlay stage-8-fx">
+            <div class="rinse-waterfall"></div>
+            <div class="rinse-stream st1"></div>
+            <div class="rinse-stream st2"></div>
+            <div class="rinse-stream st3"></div>
+            <div class="rinse-splash-burst"></div>
+          </div>
+
+          <!-- Final Sparkles (Stage 100%) -->
+          <div id="fx-final-sparkles" class="stage-overlay final-sparkle-layer">
+            <div class="clean-sparkle sp1">✨</div>
+            <div class="clean-sparkle sp2">✨</div>
+            <div class="clean-sparkle sp3">⭐</div>
+            <div class="clean-sparkle sp4">✨</div>
+            <div class="clean-sparkle sp5">⭐</div>
+            <div class="golden-clean-halo"></div>
+          </div>
+
+          <!-- Canvas for Active Physics & Click Particles -->
+          <canvas id="fx-canvas"></canvas>
+
+          <!-- Dynamic Tool Interaction Effect (Animated tool hovering/acting) -->
+          <div id="tool-anim-effect" class="tool-anim-effect"></div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- INTERACTIVE BATHING TOOLBAR -->
+    <footer class="toolbar-wrap">
+      <nav class="toolbar-dock" aria-label="Bathing Tools">
+
+        <!-- 1. WATER -->
+        <button class="tool-btn active" data-tool="water" id="tool-btn-water" type="button" aria-label="Water Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">💧</span>
+          </div>
+          <span class="tool-name">Water</span>
+        </button>
+
+        <!-- 2. SOAP -->
+        <button class="tool-btn" data-tool="soap" id="tool-btn-soap" type="button" aria-label="Soap Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">🧼</span>
+          </div>
+          <span class="tool-name">Soap</span>
+        </button>
+
+        <!-- 3. BODY WASH -->
+        <button class="tool-btn" data-tool="bodywash" id="tool-btn-bodywash" type="button" aria-label="Body Wash Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">🧴</span>
+          </div>
+          <span class="tool-name">Body Wash</span>
+        </button>
+
+        <!-- 4. SHAMPOO -->
+        <button class="tool-btn" data-tool="shampoo" id="tool-btn-shampoo" type="button" aria-label="Shampoo Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">🧴</span>
+          </div>
+          <span class="tool-name">Shampoo</span>
+        </button>
+
+        <!-- 5. SCRUB -->
+        <button class="tool-btn" data-tool="scrub" id="tool-btn-scrub" type="button" aria-label="Scrub Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">🧽</span>
+          </div>
+          <span class="tool-name">Scrub</span>
+        </button>
+
+        <!-- 6. GROOM -->
+        <button class="tool-btn" data-tool="groom" id="tool-btn-groom" type="button" aria-label="Groom Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">✂️</span>
+          </div>
+          <span class="tool-name">Groom</span>
+        </button>
+
+        <!-- 7. RINSE -->
+        <button class="tool-btn" data-tool="rinse" id="tool-btn-rinse" type="button" aria-label="Rinse Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">🚿</span>
+          </div>
+          <span class="tool-name">Rinse</span>
+        </button>
+
+        <!-- 8. TOWEL -->
+        <button class="tool-btn" data-tool="towel" id="tool-btn-towel" type="button" aria-label="Towel Tool">
+          <div class="tool-circle">
+            <span class="tool-icon">🧺</span>
+          </div>
+          <span class="tool-name">Towel</span>
+        </button>
+
+      </nav>
+    </footer>
+
+  </div>
+
+  <!-- SHORT CELEBRATORY FINAL REDIRECT NOTIFICATION (AUTOMATIC) -->
+  <div id="final-redirect-banner" class="final-redirect-banner">
+    <div class="redirect-content">
+      <span class="redirect-icon">✨</span>
+      <h3>100% CLEAN! കുളി കഴിഞ്ഞു!</h3>
+      <p>Revealing the final verdict...</p>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+
+</body>
+</html>

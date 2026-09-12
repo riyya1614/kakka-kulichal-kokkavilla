@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= START SCREEN ================= -->
+<section id="screen-start" class="screen active">
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+  <h1 class="title">കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല</h1>
+  <p class="subtitle">An interactive bathing tragedy 😂</p>
+  <div id="startCrow" class="crowHolder big"></div>
+  <button class="btn primary" onclick="Game.startStory()">▶ തുടങ്ങുക / Start</button>
+  <p class="hint">Best played with 🔊 sound on</p>
+</section>
+
+<!-- ================= STORY SCREEN ================= -->
+<section id="screen-story" class="screen">
+  <div class="sun"></div>
+  <div class="ground"></div>
+  <div id="wanderCrow" class="crowHolder wander"></div>
+  <div id="crane" class="craneHolder hidden">
+    <div id="craneArt"></div>
+    <div class="craneBubble">ഞാൻ വെളുത്തതും വൃത്തിയുള്ളതുമാണ് 😌</div>
+  </div>
+  <div id="dialogue" class="dialogue"></div>
+  <button id="beautyBtn" class="btn primary hidden" onclick="Game.goBath()">
+    ഞാനും സുന്ദരിയാവും! 💅
+  </button>
+</section>
+
+<!-- ================= BATH SCREEN ================= -->
+<section id="screen-bath" class="screen">
+  <div class="bathSky"></div>
+
+  <div class="hud">
+    <div class="hudItem">⏱️ <span id="timer">0.0s</span></div>
+    <div class="hudItem">🧹 <span id="dirtPct">100%</span> dirt</div>
+    <div class="hudItem">🏆 Score: <span id="liveScore">0</span></div>
+  </div>
+
+  <div class="meterWrap">
+    <div class="meterLabel">Cleanliness</div>
+    <div class="meter"><div id="meterFill" class="meterFill"></div></div>
+  </div>
+
+  <div class="bathScene">
+    <div class="tub">
+      <div class="bubblesLayer" id="bubblesLayer"></div>
+      <div id="bathCrow" class="crowHolder bathing"></div>
+      <div class="tubFront"></div>
+    </div>
+  </div>
+
+  <div class="tools">
+    <button class="tool selected" data-tool="soap" onclick="Game.selectTool('soap', this)">🧼<span>Soap</span></button>
+    <button class="tool" data-tool="water" onclick="Game.selectTool('water', this)">🚿<span>Water</span></button>
+    <button class="tool" data-tool="brush" onclick="Game.selectTool('brush', this)">🪥<span>Brush</span></button>
+  </div>
+  <p class="hint">Select a tool, then click / drag on the crow!</p>
+
+  <audio id="voice" src="assets/audio/poyi-kulikeda.mp3" preload="auto"></audio>
+</section>
+
+<!-- ================= REVEAL SCREEN ================= -->
+<section id="screen-reveal" class="screen">
+  <div id="sparkles" class="sparkles"></div>
+  <h2 id="revealTitle" class="revealTitle hidden">✨ Transformation Complete! ✨</h2>
+  <div id="revealCrow" class="crowHolder big clean hidden"></div>
+  <h1 id="stillCrow" class="stillCrow hidden">Congratulations! You are still a crow. 💀</h1>
+  <p id="proverb" class="proverb hidden">കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല.</p>
+  <p id="moral" class="moral hidden">A crow cannot become a crane just by bathing.<br>External appearance alone cannot change what you are. 🐦</p>
+
+  <div id="results" class="results hidden">
+    <div>⏱️ Time: <b id="finalTime"></b></div>
+    <div>🧹 Dirt removed: <b>100%</b></div>
+    <div>🏆 Final Score: <b id="finalScore"></b></div>
+  </div>
+
+  <button id="againBtn" class="btn primary hidden" onclick="Game.reset()">🔄 Play Again</button>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഫലം / The Result — കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല</title>
+  <meta name="description" content="Still a crow. Even if a crow bathes, it will not become a crane. Final results and moral of the tale.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/result.css">
+  <link rel="icon" href="assets/images/crow_clean.jpg" type="image/jpeg">
+</head>
+<body>
+
+  <!-- Cinematic Kerala Evening Backdrop -->
+  <div class="result-bg"></div>
+  <div class="result-bg-overlay"></div>
+  <div class="sunbeam-effect"></div>
+
+  <div class="result-container">
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <div class="brand-badge">
+        <div class="brand-icon-wrap">
+          <img src="assets/images/crow_clean.jpg" alt="കാക്ക (Crow)">
+        </div>
+        <div class="brand-text">
+          <span class="brand-malayalam">കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല</span>
+          <span class="brand-tagline">The Ultimate Satirical Verdict</span>
+        </div>
+      </div>
+
+      <button id="audio-toggle-btn" class="audio-btn" aria-label="Toggle Sound" title="Toggle Sound">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Result Content -->
+    <main class="result-content">
+      <!-- Left: Proud Clean Crow Showcase & Crane Comparison -->
+      <section class="result-showcase-side">
+        <div class="result-crow-frame">
+          <img src="assets/images/crow_clean.jpg" alt="100% Clean Crow" class="result-crow-img">
+          
+          <!-- Subtle Inset: The Real Crane (Unbothered) -->
+          <div class="crane-comparison-card" title="The actual Crane (കൊക്ക്) resting peacefully">
+            <img src="assets/images/crane.jpg" alt="The Crane (കൊക്ക്)" class="crane-comparison-img">
+            <span class="crane-comparison-label">Actual Crane</span>
+          </div>
+        </div>
+
+        <div class="result-status-pill">
+          <span class="status-dot-clean"></span>
+          <span>Status: <strong>Ultra-Clean, Glossy &amp; Iridescent</strong></span>
+        </div>
+      </section>
+
+      <!-- Right: Punchline & Statistics -->
+      <section class="result-info-side">
+        <div class="result-verdict-pill">
+          <span>✨</span> THE RESULT
+        </div>
+
+        <h1 class="result-headline">Still a crow.</h1>
+
+        <h2 class="result-proverb-ml">
+          കാക്ക കുളിച്ചാൽ കൊക്കാവില്ല
+        </h2>
+
+        <p class="result-explanation">
+          You cleaned the crow completely. You applied well water, herbal soap, rich body wash, botanical shampoo, scrubbed with a coir brush, groomed with a razor, and dried it with a Kerala mundu...<br><br>
+          <em>But cleaning it did not change what it is.</em>
+        </p>
+
+        <!-- Dynamic Statistics Card -->
+        <div class="stats-card">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">Cleanliness</span>
+              <span id="stat-clean-val" class="stat-val gold">100%</span>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-label">Bathing Time</span>
+              <span id="stat-time-val" class="stat-val">00:00</span>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-label">Crane Transformation</span>
+              <span class="stat-val red">0.0%</span>
+            </div>
+          </div>
+
+          <div class="stats-footer">
+            <div class="species-info">
+              <span class="species-label">Confirmed Biological Species</span>
+              <span class="species-name">Corvus splendens (കാക്ക) 🐦</span>
+            </div>
+
+            <span class="crane-result-pill">
+              കൊക്ക് ആകാൻ പറ്റിയില്ല ❌
+            </span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="result-actions">
+          <button id="btn-play-again" class="btn-primary">
+            <span>PLAY AGAIN</span>
+            <span class="btn-arrow">↻</span>
+          </button>
+
+          <button id="btn-home" class="btn-secondary">
+            <span>🏠 HOME</span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/result.js"></script>
+</body>
+</html>

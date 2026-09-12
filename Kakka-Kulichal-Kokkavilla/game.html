@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കാക്കയെ കുളിപ്പിക്കുക — Kakka Bathing Arena</title>
+  <meta name="description" content="Scrub, lather, and wash the Kerala crow with traditional bathing tools in an interactive simulation.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="icon" href="assets/images/crow_clean.jpg" type="image/jpeg">
+</head>
+<body>
+
+  <div class="game-container">
+    <!-- Bathing Platform Courtyard Background -->
+    <div class="game-bg"></div>
+    <div class="game-bg-overlay"></div>
+
+    <!-- TOP HUD -->
+    <header class="game-hud">
+      <div class="hud-left">
+        <a href="index.html" class="btn-secondary" id="btn-back-home" title="Return to Home">
+          <span>←</span> HOME
+        </a>
+      </div>
+
+      <!-- Center Progress & Stage Meter -->
+      <div class="hud-center">
+        <div class="meter-meta">
+          <div class="clean-label">
+            <span>CLEANLINESS:</span>
+            <span id="clean-pct-val" class="clean-pct">0%</span>
+          </div>
+          <span id="stage-num" class="stage-badge">STAGE 1/8</span>
+        </div>
+
+        <div class="progress-track">
+          <div id="clean-progress-bar" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="hud-badge timer-badge" title="Bathing Timer">
+          <span>⏱️</span>
+          <span id="timer-val" class="timer-val">00:00</span>
+        </div>
+
+        <div class="hud-badge crane-lock-badge" title="Crane Transformation Probability">
+          <span>🕊️</span>
+          <span>CRANE: 0.0%</span>
+        </div>
+
+        <button id="audio-toggle-btn" class="audio-btn" aria-label="Toggle Sound" title="Toggle Sound">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- INSTRUCTION BANNER -->
+    <div class="instruction-banner">
+      <span class="instruction-icon">🧼</span>
+      <span id="instruction-text" class="instruction-text">
+        Click or hold on the crow to pour well water from the brass uruli!
+      </span>
+      <span id="instruction-note" class="instruction-hand-note">— Rinsing initial mud...</span>
+    </div>
+
+    <!-- MAIN BATHING ARENA -->
+    <main class="arena-wrap">
+      <div id="crow-stage" class="crow-stage">
+        <div class="crow-layer-container">
+          <!-- Layer 1: Pristine Clean Crow (Base) -->
+          <img id="layer-clean" src="assets/images/crow_clean.jpg" alt="Clean Crow" class="crow-img-layer">
+          
+          <!-- Layer 2: Wet Matted Plumage -->
+          <img id="layer-wet" src="assets/images/crow_wet.jpg" alt="Wet Crow" class="crow-img-layer">
+          
+          <!-- Layer 3: Muddy Dusty Crow (Initial) -->
+          <img id="layer-dirty" src="assets/images/crow_dirty.jpg" alt="Dirty Crow" class="crow-img-layer">
+          
+          <!-- Layer 4: Thick White Foam & Lather Crow -->
+          <img id="layer-foamed" src="assets/images/crow_foamed.jpg" alt="Foamed Crow" class="crow-img-layer">
+          
+          <!-- Procedural Mud Splatters -->
+          <div id="mud-patches-layer" class="mud-patches-layer"></div>
+
+          <!-- 3D Realistic Foam & Soap Bubbles Overlay -->
+          <div id="foam-bubbles-layer" class="foam-bubbles-layer"></div>
+
+          <!-- Dynamic Particle & Water Canvas -->
+          <canvas id="fx-canvas"></canvas>
+        </div>
+      </div>
+    </main>
+
+    <!-- Floating Brush for Scrubbing Cursor -->
+    <div id="brush-cursor-follower">
+      <svg viewBox="0 0 64 64" width="60" height="60">
+        <!-- Wooden handle -->
+        <rect x="24" y="4" width="16" height="34" rx="8" fill="#a06030" stroke="#f4eee2" stroke-width="1.5"/>
+        <rect x="28" y="8" width="8" height="26" rx="4" fill="#804520"/>
+        <!-- Brush block -->
+        <rect x="12" y="34" width="40" height="14" rx="5" fill="#c08040" stroke="#f4eee2" stroke-width="1.5"/>
+        <!-- Natural Coir Bristles -->
+        <path d="M14 48 L14 60 M18 48 L18 60 M22 48 L22 60 M26 48 L26 60 M30 48 L30 60 M34 48 L34 60 M38 48 L38 60 M42 48 L42 60 M46 48 L46 60 M50 48 L50 60" stroke="#f4e0b0" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- BOTTOM TOOL BAR -->
+    <footer class="toolbar-wrap">
+      <nav class="toolbar-dock" aria-label="Bathing Tools">
+        
+        <!-- 1. WATER -->
+        <button class="tool-btn active" data-tool="water" title="Water (Uruli / Shower)">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Brass Spout / Uruli Stream -->
+              <path d="M12 10 C12 6, 24 4, 36 10 L38 18 C38 22, 28 24, 18 20 Z" fill="#d4af37" stroke="#fff" stroke-width="1.2"/>
+              <!-- Water Drops -->
+              <path d="M22 24 Q24 28 24 31 A2 2 0 0 1 20 31 Q20 28 22 24 Z" fill="#9fe0ff"/>
+              <path d="M28 26 Q30 31 30 35 A2.5 2.5 0 0 1 25 35 Q25 31 28 26 Z" fill="#bfeaff"/>
+              <path d="M16 28 Q18 33 18 36 A2 2 0 0 1 14 36 Q14 33 16 28 Z" fill="#80d0ff"/>
+              <circle cx="21" cy="42" r="2.5" fill="#c5f0ff"/>
+              <circle cx="28" cy="43" r="2" fill="#c5f0ff"/>
+            </svg>
+          </div>
+          <span class="tool-label">Water</span>
+        </button>
+
+        <!-- 2. SOAP -->
+        <button class="tool-btn" data-tool="soap" title="Ayurvedic Soap Bar">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Herbal Soap Bar -->
+              <rect x="8" y="14" width="32" height="20" rx="6" fill="#2d6e43" stroke="#f7e7a9" stroke-width="1.5"/>
+              <rect x="12" y="18" width="24" height="12" rx="4" fill="#3b8855"/>
+              <path d="M18 24 C20 22, 24 26, 26 24" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- Soap bubbles on bar -->
+              <circle cx="34" cy="12" r="4.5" fill="rgba(255,255,255,0.85)" stroke="#fff" stroke-width="0.8"/>
+              <circle cx="39" cy="18" r="3" fill="rgba(255,255,255,0.75)"/>
+              <circle cx="10" cy="12" r="3.5" fill="rgba(255,255,255,0.8)"/>
+            </svg>
+          </div>
+          <span class="tool-label">Soap</span>
+        </button>
+
+        <!-- 3. BODY WASH -->
+        <button class="tool-btn" data-tool="bodywash" title="Herbal Body Wash">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Dispenser Pump -->
+              <path d="M22 6 H30 V9 H22 Z M24 9 V13 H28 V9 Z" fill="#d4af37" stroke="#fff" stroke-width="0.8"/>
+              <path d="M20 7 H14 C12 7, 12 11, 14 11 H20" stroke="#d4af37" stroke-width="2" stroke-linecap="round"/>
+              <!-- Bottle Body -->
+              <rect x="13" y="13" width="22" height="27" rx="7" fill="#b06b2e" stroke="#f7e7a9" stroke-width="1.2"/>
+              <rect x="17" y="20" width="14" height="14" rx="3" fill="#8f501b"/>
+              <circle cx="24" cy="27" r="3.5" fill="#f7e7a9"/>
+            </svg>
+          </div>
+          <span class="tool-label">Body Wash</span>
+        </button>
+
+        <!-- 4. SHAMPOO -->
+        <button class="tool-btn" data-tool="shampoo" title="Botanical Shampoo">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Cap -->
+              <path d="M20 6 H28 V12 H20 Z" fill="#f7e7a9" stroke="#fff" stroke-width="0.8"/>
+              <!-- Bottle Shape -->
+              <path d="M15 14 C15 12, 19 12, 24 12 C29 12, 33 12, 33 14 L35 38 C35 41, 30 42, 24 42 C18 42, 13 41, 13 38 Z" fill="#1b4b30" stroke="#f7e7a9" stroke-width="1.2"/>
+              <!-- Leaf Emblem -->
+              <path d="M24 20 C21 24, 21 28, 24 32 C27 28, 27 24, 24 20 Z" fill="#60b57e"/>
+              <circle cx="33" cy="9" r="3" fill="rgba(255,255,255,0.85)"/>
+            </svg>
+          </div>
+          <span class="tool-label">Shampoo</span>
+        </button>
+
+        <!-- 5. SCRUB -->
+        <button class="tool-btn" data-tool="scrub" title="Coir Bath Brush (Click & Drag)">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Wooden Handle -->
+              <path d="M34 8 L40 14 L28 26 L22 20 Z" fill="#a06030" stroke="#f7e7a9" stroke-width="1"/>
+              <!-- Brush Head -->
+              <ellipse cx="18" cy="30" rx="12" ry="8" transform="rotate(-30 18 30)" fill="#c08040" stroke="#fff" stroke-width="1"/>
+              <!-- Bristles -->
+              <path d="M8 32 L6 36 M12 36 L10 40 M17 38 L16 43 M23 37 L23 42 M28 33 L30 38" stroke="#f7e7a9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="tool-label">Scrub</span>
+        </button>
+
+        <!-- 6. RAZOR -->
+        <button class="tool-btn" data-tool="razor" title="Classic Razor (Humorous Grooming)">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Safety Razor Head -->
+              <rect x="12" y="10" width="24" height="6" rx="2.5" fill="#d4af37" stroke="#fff" stroke-width="1"/>
+              <line x1="14" y1="13" x2="34" y2="13" stroke="#fff" stroke-width="1.2"/>
+              <rect x="17" y="16" width="14" height="3" fill="#b08a1c"/>
+              <!-- Textured Handle -->
+              <rect x="22" y="19" width="4" height="23" rx="2" fill="#d4af37" stroke="#fff" stroke-width="0.8"/>
+              <line x1="22" y1="24" x2="26" y2="24" stroke="#7a5e0b" stroke-width="1"/>
+              <line x1="22" y1="29" x2="26" y2="29" stroke="#7a5e0b" stroke-width="1"/>
+              <line x1="22" y1="34" x2="26" y2="34" stroke="#7a5e0b" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="tool-label">Razor</span>
+        </button>
+
+        <!-- 7. TOWEL -->
+        <button class="tool-btn" data-tool="towel" title="Soft Kerala Mundu Towel (Dry & Polish)">
+          <div class="tool-circle">
+            <svg class="tool-icon-svg" viewBox="0 0 48 48" fill="none">
+              <!-- Folded Mundu Cotton Fabric -->
+              <rect x="10" y="14" width="28" height="24" rx="5" fill="#fcf9f2" stroke="#d4af37" stroke-width="1.2"/>
+              <!-- Kasavu Gold Border Stripes -->
+              <line x1="10" y1="20" x2="38" y2="20" stroke="#d4af37" stroke-width="2.5"/>
+              <line x1="10" y1="25" x2="38" y2="25" stroke="#e8c85a" stroke-width="1"/>
+              <!-- Fabric fold curve -->
+              <path d="M10 28 C18 31, 30 27, 38 30" stroke="#d8d0c0" stroke-width="1.2"/>
+              <path d="M10 33 C18 36, 30 32, 38 35" stroke="#d8d0c0" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <span class="tool-label">Towel</span>
+        </button>
+
+      </nav>
+    </footer>
+  </div>
+
+  <!-- COMPLETION TRANSITION MODAL -->
+  <div id="completion-modal" class="completion-modal-overlay">
+    <div class="completion-card">
+      <div class="completion-icon">✨</div>
+      <h2>കുളി കഴിഞ്ഞു!</h2>
+      <p>
+        The crow is <strong>100% spotless, fragrant, and fully dried</strong>.<br>
+        Bathing completed in <strong id="modal-final-time" class="timer-val">00:00</strong>.
+      </p>
+      <p style="font-family: var(--font-hand); font-size: 1.4rem; color: var(--gold-light);">
+        Did it become a crane? Let's find out...
+      </p>
+      <button id="btn-go-result" class="btn-primary">
+        <span>VIEW FINAL REVEAL</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
